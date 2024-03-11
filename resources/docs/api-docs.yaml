@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: Currency Rates API
+  description: API documentation for fetching currency rates
+  version: 1.0.0
+
+paths:
+  /api/cbr/currency-rates/daily:
+    get:
+      summary: Get the CBR Daily rates
+      tags:
+        - Currency
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                message: CBR Daily rates retrieved successfully
+
+  /api/cbr/currency-rates/period:
+    get:
+      summary: Get currency rates for a specified period
+      tags:
+        - Currency
+      parameters:
+        - in: query
+          name: start_date
+          description: Start date of the period (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2024-03-01"
+        - in: query
+          name: end_date
+          description: End date of the period (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+            example: "2024-03-10"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              example:
+                message: Currency rates for the specified period retrieved successfully
+
+components:
+  schemas:
+    CbrDailyRatesResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: CBR Daily rates retrieved successfully
+
+    CbrRatesForPeriodResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Currency rates for the specified period retrieved successfully
