@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use function Laravel\Prompts\error;
 
 class CurrencyService
 {
@@ -74,6 +75,14 @@ class CurrencyService
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        if ($startDate === null || $endDate === null) {
+            return Response::json(
+                data: [
+                    'error' => 'Start and end dates must be provided'
+                ],
+                status: 400
+            );
+        }
         $data = $this->currencyRepository->findByPeriod(
             startDate: $startDate,
             endDate: $endDate
